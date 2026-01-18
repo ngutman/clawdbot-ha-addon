@@ -5,7 +5,7 @@ log() {
   printf "[addon] %s\n" "$*"
 }
 
-log "run.sh version=2026-01-05-public"
+log "run.sh version=2026-01-18-persistent-home"
 
 BASE_DIR=/config/clawdbot
 STATE_DIR="${BASE_DIR}/.clawdbot"
@@ -14,6 +14,26 @@ WORKSPACE_DIR="${BASE_DIR}/workspace"
 SSH_AUTH_DIR="${BASE_DIR}/.ssh"
 
 mkdir -p "${BASE_DIR}" "${STATE_DIR}" "${WORKSPACE_DIR}" "${SSH_AUTH_DIR}"
+
+# Create persistent directories
+mkdir -p "${BASE_DIR}/.config/gh" "${BASE_DIR}/.local" "${BASE_DIR}/.cache" "${BASE_DIR}/.npm" "${BASE_DIR}/bin"
+
+# Symlink /root dirs to persistent storage (needed because some tools ignore $HOME for root)
+for dir in .ssh .config .local .cache .npm; do
+  target="${BASE_DIR}/${dir}"
+  link="/root/${dir}"
+  if [ -L "${link}" ]; then
+    :
+  elif [ -d "${link}" ]; then
+    cp -rn "${link}/." "${target}/" 2>/dev/null || true
+    rm -rf "${link}"
+    ln -s "${target}" "${link}"
+  else
+    rm -f "${link}" 2>/dev/null || true
+    ln -s "${target}" "${link}"
+  fi
+done
+log "persistent home symlinks configured"
 
 if [ -d /root/.clawdbot ] && [ ! -f "${STATE_DIR}/clawdbot.json" ]; then
   cp -a /root/.clawdbot/. "${STATE_DIR}/"
@@ -34,6 +54,9 @@ export CLAWDBOT_CONFIG_PATH="${STATE_DIR}/clawdbot.json"
 log "config path=${CLAWDBOT_CONFIG_PATH}"
 
 cat > /etc/profile.d/clawdbot.sh <<EOF
+export HOME="${BASE_DIR}"
+export GH_CONFIG_DIR="${BASE_DIR}/.config/gh"
+export PATH="${BASE_DIR}/bin:\${PATH}"
 if [ -n "\${SSH_CONNECTION:-}" ]; then
   export CLAWDBOT_STATE_DIR="${STATE_DIR}"
   export CLAWDBOT_CONFIG_PATH="${STATE_DIR}/clawdbot.json"

@@ -6,6 +6,7 @@ Run the Clawdbot Gateway on Home Assistant OS and access it securely over an SSH
 - Gateway runs locally on the HA host (binds to loopback by default).
 - SSH server in the add-on provides secure remote access for Clawdbot.app or the CLI.
 - On first start, the add-on runs `clawdbot setup` to create a minimal config and workspace.
+- Persistent home data (SSH keys, config, npm cache, GitHub CLI config) lives under `/config/clawdbot`.
 - This README is shown in the Home Assistant add-on info panel.
 
 ## Install (Repository Add-on)
@@ -62,6 +63,7 @@ Use `pnpm clawdbot configure` or `pnpm clawdbot onboard` to set it in `clawdbot.
 ## Data Locations
 - Config: `/config/clawdbot/.clawdbot/clawdbot.json`
 - Auth: `/config/clawdbot/.clawdbot/agent/auth.json`
+- Persistent home: `/config/clawdbot/.ssh`, `/config/clawdbot/.config`, `/config/clawdbot/.local`, `/config/clawdbot/.cache`, `/config/clawdbot/.npm`
 - Workspace: `/config/clawdbot/workspace`
 - Repo checkout: `/config/clawdbot/clawdbot-src`
 

@@ -1,6 +1,6 @@
 {
   "name": "Clawdbot Gateway",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "slug": "clawdbot_gateway",
   "description": "Clawdbot Gateway (SSH-tunneled, HA add-on)",
   "url": "https://github.com/ngutman/clawdbot-ha-addon",
@@ -12,6 +12,10 @@
   "hassio_api": false,
   "homeassistant_api": false,
   "map": ["config:rw"],
+  "environment": {
+    "HOME": "/config/clawdbot",
+    "GH_CONFIG_DIR": "/config/clawdbot/.config/gh"
+  },
   "options": {
     "port": 18789,
     "verbose": false,

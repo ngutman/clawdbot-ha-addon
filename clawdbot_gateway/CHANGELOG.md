@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.11
+- Docker: install GitHub CLI.
+- Storage: persist root home directories under /config/clawdbot.
+- Docker: refresh base image/toolchain and update gogcli. Thanks @niemyjski! (PR #2)
+
 ## 0.2.10
 - Fix: remove unsupported pnpm install flag in add-on image.
 

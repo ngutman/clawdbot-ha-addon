@@ -9,6 +9,7 @@ Clawdbot Gateway for HA OS with SSH tunnel support for Mac node connections.
 
 **Included tools:**
 - **gog** — Google Workspace CLI (Gmail, Calendar, Drive, Contacts, Sheets, Docs). See [gogcli.sh](https://gogcli.sh)
+- **gh** — GitHub CLI.
 
 ## Installation
 
@@ -34,3 +35,4 @@ Clawdbot Gateway for HA OS with SSH tunnel support for Mac node connections.
 ## Links
 - [Clawdbot](https://github.com/clawdbot/clawdbot)
 - [gog CLI](https://gogcli.sh)
+- [GitHub CLI](https://cli.github.com)
