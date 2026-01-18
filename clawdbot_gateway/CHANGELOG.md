@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.12
+- Docker: install Bun runtime.
+
 ## 0.2.11
 - Docker: install GitHub CLI.
 - Storage: persist root home directories under /config/clawdbot.

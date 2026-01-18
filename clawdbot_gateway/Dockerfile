@@ -14,6 +14,7 @@ RUN apt-get update \
     ripgrep \
     curl \
     nano \
+    unzip \
     python3 \
     python3-pip \
     make \
@@ -38,8 +39,11 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
   && apt-get install -y gh \
   && rm -rf /var/lib/apt/lists/*
 
+ENV BUN_INSTALL=/usr/local/bun
 ENV PNPM_HOME=/pnpm
-ENV PATH="${PNPM_HOME}:${PATH}"
+ENV PATH="${BUN_INSTALL}/bin:${PNPM_HOME}:${PATH}"
+
+RUN curl -fsSL https://bun.sh/install | bash
 
 RUN npm install -g pnpm \
   && mkdir -p /pnpm \
