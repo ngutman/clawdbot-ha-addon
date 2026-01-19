@@ -333,8 +333,8 @@ format_log_stream() {
       else $text end;
     def collect_fields($meta; $fields):
       [ $fields[] | select($meta[.] != null) | "\(. )=\(render($meta[.]))" ];
-    def format_line($time; $level; $label; $message; $fields):
-      ([ $time, (colorize($level; $level)), $label ] | map(select(. != null and . != "")) | join(" "))
+    def format_line($time; $level; $tag; $message; $fields):
+      ([ $time, (colorize($level; $level)), $tag ] | map(select(. != null and . != "")) | join(" "))
       + (if $message != "" then " - " + $message else "" end)
       + (if ($fields|length) > 0 then " | " + ($fields|join(" ")) else "" end);
     . as $line
@@ -351,8 +351,8 @@ format_log_stream() {
           else
             ($obj.time // $meta.date // "") as $time
             | ($meta.logLevelName // "INFO" | tostring | ascii_upcase) as $level
-            | ($name_meta.subsystem // $name_meta.module // "") as $label
-            | format_line($time; $level; $label; $message; collect_fields($merged; $field_list))
+            | ($name_meta.subsystem // $name_meta.module // "") as $tag
+            | format_line($time; $level; $tag; $message; collect_fields($merged; $field_list))
           end
       end
   '
