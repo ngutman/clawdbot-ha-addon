@@ -5,7 +5,7 @@ log() {
   printf "[addon] %s\n" "$*"
 }
 
-log "run.sh version=2026-01-18-persistent-home"
+log "run.sh version=2026-01-19-branch-tags"
 
 BASE_DIR=/config/clawdbot
 STATE_DIR="${BASE_DIR}/.clawdbot"
@@ -150,13 +150,22 @@ if [ ! -d "${REPO_DIR}/.git" ]; then
 else
   log "updating repo in ${REPO_DIR}"
   git -C "${REPO_DIR}" remote set-url origin "${REPO_URL}"
-  git -C "${REPO_DIR}" fetch --prune
+  git -C "${REPO_DIR}" fetch --prune --tags
   git -C "${REPO_DIR}" reset --hard
   git -C "${REPO_DIR}" clean -fd
   if [ -n "${BRANCH}" ]; then
-    git -C "${REPO_DIR}" checkout "${BRANCH}"
-    git -C "${REPO_DIR}" reset --hard "origin/${BRANCH}"
+    # Check if "origin/${BRANCH}" exists (meaning it's a branch)
+    if git -C "${REPO_DIR}" rev-parse --verify "origin/${BRANCH}" >/dev/null 2>&1; then
+      log "Checking out branch: ${BRANCH}"
+      # Reset local branch to match remote exactly
+      git -C "${REPO_DIR}" checkout -B "${BRANCH}" "origin/${BRANCH}"
+    else
+      # If not found on origin, treat it as a Tag or Commit SHA
+      log "Checking out tag/commit: ${BRANCH}"
+      git -C "${REPO_DIR}" checkout --force "${BRANCH}"
+    fi
   else
+    # Fallback to default branch if no specific branch/tag is defined
     DEFAULT_BRANCH=$(git -C "${REPO_DIR}" remote show origin | sed -n '/HEAD branch/s/.*: //p')
     git -C "${REPO_DIR}" checkout "${DEFAULT_BRANCH}"
     git -C "${REPO_DIR}" reset --hard "origin/${DEFAULT_BRANCH}"
