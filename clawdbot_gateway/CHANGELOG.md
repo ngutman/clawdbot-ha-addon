@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.16
+- Fix: use openclaw CLI after upstream rename. (#11, #12)
+- Config: default repo_url now points to OpenClaw.
+- Docs: refresh naming and CLI commands for OpenClaw.
+- Fix: require OpenClaw repo revisions; exit early on legacy clawdbot/moltbot.
+- Storage: move legacy paths into OpenClaw naming via migrate.sh.
+- Breaking: add-on now supports OpenClaw setups only.
+
 ## 0.2.15
 - Fix: install dev dependencies so gateway builds include tsc. (#9)
 

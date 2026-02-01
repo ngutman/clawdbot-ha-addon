@@ -1,8 +1,8 @@
 {
-  "name": "Clawdbot Gateway",
-  "version": "0.2.15",
+  "name": "OpenClaw Gateway",
+  "version": "0.2.17",
   "slug": "clawdbot_gateway",
-  "description": "Clawdbot Gateway (SSH-tunneled, HA add-on)",
+  "description": "OpenClaw Gateway (SSH-tunneled, HA add-on)",
   "url": "https://github.com/ngutman/clawdbot-ha-addon",
   "documentation": "https://github.com/ngutman/clawdbot-ha-addon",
   "arch": ["aarch64", "armv7", "amd64"],
@@ -13,8 +13,8 @@
   "homeassistant_api": false,
   "map": ["config:rw"],
   "environment": {
-    "HOME": "/config/clawdbot",
-    "GH_CONFIG_DIR": "/config/clawdbot/.config/gh"
+    "HOME": "/config/openclaw",
+    "GH_CONFIG_DIR": "/config/openclaw/.config/gh"
   },
   "options": {
     "port": 18789,
@@ -22,7 +22,7 @@
     "log_format": "pretty",
     "log_color": false,
     "log_fields": "",
-    "repo_url": "https://github.com/clawdbot/clawdbot.git",
+    "repo_url": "https://github.com/openclaw/openclaw.git",
     "branch": "",
     "github_token": "",
     "ssh_port": 2222,
