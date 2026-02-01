@@ -48,6 +48,7 @@ fi
 export HOME="${BASE_DIR}"
 export PNPM_HOME="${PNPM_HOME}"
 export PATH="${BASE_DIR}/bin:${PNPM_HOME}:${PATH}"
+export CI=true
 export OPENCLAW_STATE_DIR="${STATE_DIR}"
 export OPENCLAW_CONFIG_PATH="${CONFIG_PATH}"
 
